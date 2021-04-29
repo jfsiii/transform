@@ -23,11 +23,12 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
       type: "*"
     };
 
-    const schema = createGenerator(config).createSchema(config.type);
+    const generator = createGenerator(config);
+    // const schema = generator.createSchema(config.type);
     const read = fs.readFileSync(filePath, { encoding: "utf-8" });
     res
       .status(200)
-      .send(JSON.stringify({ filePath, program, read, schema }, null, 2));
+      .send(JSON.stringify({ filePath, program, read, generator }, null, 2));
   } catch (e) {
     res.status(500).send(e.message);
   }
